@@ -23,12 +23,16 @@ const scene = new THREE.Scene()
 const loadingManager = new THREE.LoadingManager()
 const textureLoader = new THREE.TextureLoader()
 
-const colorTexture = textureLoader.load('/textures/door/color.jpg')
+// const colorTexture = textureLoader.load('/textures/door/color.jpg')
+const colorTexture = textureLoader.load('/textures/minecraft.png')
 colorTexture.repeat.x = 2
 colorTexture.repeat.y = 2
 colorTexture.wrapS = THREE.RepeatWrapping
 colorTexture.wrapT = THREE.RepeatWrapping
 colorTexture.rotation = Math.PI * 0.30
+colorTexture.generateMipmaps = false
+colorTexture.minFilter = THREE.NearestFilter
+colorTexture.magFilter = THREE.NearestFilter
 const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
 const heightTexture = textureLoader.load('/textures/door/height.jpg')
 const normalTexture = textureLoader.load('/textures/door/normal.jpg')
