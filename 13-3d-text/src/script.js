@@ -22,11 +22,12 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-
+const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
 /**
  * Fonts
  */
 const fontLoader = new FontLoader()
+
 
 fontLoader.load(
     '/fonts/helvetiker_regular.typeface.json',
@@ -44,9 +45,12 @@ fontLoader.load(
                 bevelOffset: 0,
                 bevelSegments: 5
             })
+
         const textMaterial = new THREE.MeshBasicMaterial({
-            wireframe: true
+            wireframe: true,
+            matcap: matcapTexture
         })
+
 
         textGeometry.computeBoundingBox()
         textGeometry.translate(
