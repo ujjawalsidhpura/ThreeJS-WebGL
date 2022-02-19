@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BackSide } from 'three'
 import * as dat from 'lil-gui'
 
+
 /**
  * Base
  */
@@ -34,6 +35,11 @@ window.addEventListener('resize', () => {
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
+
+/**
+ * Debug
+ */
+const gui = new dat.GUI()
 
 /**
  * Textures
@@ -79,14 +85,28 @@ pointLight.position.y = 3
 pointLight.position.z = 4
 scene.add(pointLight)
 
+
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+const environmentMapTexture = cubeTextureLoader.load([
+    '/textures/environmentMaps/0/px.jpg',
+    '/textures/environmentMaps/0/nx.jpg',
+    '/textures/environmentMaps/0/py.jpg',
+    '/textures/environmentMaps/0/ny.jpg',
+    '/textures/environmentMaps/0/pz.jpg',
+    '/textures/environmentMaps/0/nz.jpg'
+])
+
+
 const material = new THREE.MeshStandardMaterial({
-    map: doorColorTexture,
-    aoMap: doorAmbientOcclusionTexture,
-    aoMapIntensity: 1
+    envMap: environmentMapTexture
 })
+material.metalness = 0.7
+material.roughness = 0.2
+gui.add(material, 'metalness').min(0).max(1).step(0.0001)
+gui.add(material, 'roughness').min(0).max(1).step(0.0001)
 
 const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
+    new THREE.BoxGeometry(1, 1, 1),
     material
 )
 sphere.position.x = - 1.5
@@ -162,12 +182,3 @@ const tick = () => {
 
 tick()
 
-/**
- * Debug
- */
-const gui = new dat.GUI()
-
-gui
-    .add(material, 'metalness').min(0).max(1).step(0.0001)
-gui
-    .add(material, 'roughness').min(0).max(1).step(0.0001)
