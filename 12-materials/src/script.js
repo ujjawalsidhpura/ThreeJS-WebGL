@@ -2,6 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { BackSide } from 'three'
+import * as dat from 'lil-gui'
 
 /**
  * Base
@@ -46,7 +47,7 @@ const doorHeightTexture = textureLoader.load('/textures/door/height.jpg')
 const doorNormalTexture = textureLoader.load('/textures/door/normal.jpg')
 const doorMetalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
 const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
-const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
+const matcapTexture = textureLoader.load('/textures/matcaps/2.png')
 const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
 
 
@@ -61,8 +62,27 @@ const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
 //     opacity: 0.5,
 //     alphaMap: doorAlphaTexture
 // })
-const material = new THREE.MeshNormalMaterial({
-    flatShading: true
+
+
+// const material = new THREE.MeshNormalMaterial({
+//     flatShading: true
+// })
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambientLight)
+const pointLight = new THREE.PointLight(0xffffff, 0.5)
+pointLight.position.x = 2
+pointLight.position.y = 3
+pointLight.position.z = 4
+scene.add(pointLight)
+
+const material = new THREE.MeshStandardMaterial({
+    map: doorColorTexture,
+    aoMap: doorAmbientOcclusionTexture,
+    aoMapIntensity: 1
 })
 
 const sphere = new THREE.Mesh(
@@ -81,6 +101,10 @@ const torus = new THREE.Mesh(
     material
 )
 torus.position.x = 1.5
+
+sphere.geometry.setAttribute('uv2', new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2))
+plane.geometry.setAttribute('uv2', new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
+torus.geometry.setAttribute('uv2', new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2))
 
 scene.add(sphere, plane, torus)
 
@@ -135,4 +159,15 @@ const tick = () => {
     window.requestAnimationFrame(tick)
 }
 
+
 tick()
+
+/**
+ * Debug
+ */
+const gui = new dat.GUI()
+
+gui
+    .add(material, 'metalness').min(0).max(1).step(0.0001)
+gui
+    .add(material, 'roughness').min(0).max(1).step(0.0001)
