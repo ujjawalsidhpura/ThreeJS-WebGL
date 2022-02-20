@@ -9,6 +9,8 @@ import * as dat from 'lil-gui'
 // Debug
 const gui = new dat.GUI()
 
+
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -21,11 +23,17 @@ const scene = new THREE.Scene()
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const pointLight = new THREE.PointLight(0xffffff, 0.5)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight)
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
+scene.add(directionalLight)
+directionalLight.position.set(1, 0.25, 0)
+
+gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
+
+// const pointLight = new THREE.PointLight(0xffffff, 0.5)
+// pointLight.position.x = 2
+// pointLight.position.y = 3
+// pointLight.position.z = 4
+// scene.add(pointLight)
 
 /**
  * Objects
@@ -69,8 +77,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -112,8 +119,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const clock = new THREE.Clock()
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
 
     // Update objects
