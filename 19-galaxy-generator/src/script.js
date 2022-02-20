@@ -16,49 +16,42 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Textures
+ * Galaxy
  */
-const textureLoader = new THREE.TextureLoader()
-const particleTexture = textureLoader.load('/textures/particles/2.png')
+const parameters = {}
+parameters.count = 1000
+parameters.size = 0.02
 
-/**
- * Particles
- */
-{
-    // Geometry
-    // const particlesGeometry = new THREE.SphereGeometry(1, 32, 32)
+const generateGalaxy = () => {
 
-    // Custom Geometry
-    const particlesGeometry = new THREE.BufferGeometry()
-    const count = 500
+    //Geometry
+    const geometry = new THREE.BufferGeometry()
 
-    const positions = new Float32Array(count * 3) // Multiply by 3 because each position is composed of 3 values (x, y, z)
+    const positions = new Float32Array(parameters.count * 3)
 
-    for (let i = 0; i < count * 3; i++) // Multiply by 3 for same reason 
-    {
-        positions[i] = (Math.random() - 0.5) * 10
-        // Math.random() - 0.5 to have a random value between -0.5 and +0.5
+    for (let i = 0; i < parameters.count; i++) {
+        const i3 = i * 3
+
+        positions[i3] = (Math.random() - 0.5) * 3
+        positions[i3 + 1] = (Math.random() - 0.5) * 3
+        positions[i3 + 2] = (Math.random() - 0.5) * 3
     }
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3)) // Create the Three.js BufferAttribute and specify that each information is composed of 3 values
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
     // Material
-
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        sizeAttenuation: true
+    const material = new THREE.PointsMaterial({
+        size: parameters.size,
+        sizeAttenuation: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
     })
 
-    // particlesMaterial.map = particleTexture
-    particlesMaterial.transparent = true
-    particlesMaterial.alphaMap = particleTexture
-    particlesMaterial.color = new THREE.Color('#ff88cc')
     // Points
-    const particles = new THREE.Points(particlesGeometry, particlesMaterial)
-    scene.add(particles)
-
+    const points = new THREE.Points(geometry, material)
+    scene.add(points)
 }
-
+generateGalaxy()
 
 /**
  * Sizes
@@ -87,6 +80,8 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+camera.position.x = 3
+camera.position.y = 3
 camera.position.z = 3
 scene.add(camera)
 
