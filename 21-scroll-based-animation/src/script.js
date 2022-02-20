@@ -16,6 +16,24 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
+ * Particles
+ */
+// Geometry
+const objectsDistance = 4
+const particlesCount = 200
+const positions = new Float32Array(particlesCount * 3)
+
+
+for (let i = 0; i < particlesCount; i++) {
+    positions[i * 3 + 0] = (Math.random() - 0.5) * 10
+    positions[i * 3 + 1] = Math.random()
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 10
+}
+
+const particlesGeometry = new THREE.BufferGeometry()
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
+/**
  * Objects
  */
 
@@ -30,6 +48,16 @@ const material = new THREE.MeshToonMaterial({
     gradientMap: gradientTexture
 })
 
+const particlesMaterial = new THREE.PointsMaterial({
+    color: parameters.materialColor,
+    sizeAttenuation: true,
+    size: 0.03
+})
+
+// Points
+const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+scene.add(particles)
+
 // Meshes
 const mesh1 = new THREE.Mesh(
     new THREE.TorusGeometry(1, 0.4, 16, 60),
@@ -43,7 +71,7 @@ const mesh3 = new THREE.Mesh(
     new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
     material
 )
-const objectsDistance = 4
+
 mesh1.position.y = - objectsDistance * 0
 mesh2.position.y = - objectsDistance * 1
 mesh3.position.y = - objectsDistance * 2
@@ -87,8 +115,15 @@ window.addEventListener('resize', () => {
  * Scroll
  */
 let scrollY = window.scrollY
+let currentSection = 0
+
 window.addEventListener('scroll', () => {
     scrollY = window.scrollY
+    const newSection = Math.round(scrollY / sizes.height)
+
+    if (newSection != currentSection) {
+        currentSection = newSection
+    }
 })
 
 /**
