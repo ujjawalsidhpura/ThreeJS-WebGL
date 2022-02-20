@@ -23,11 +23,17 @@ const scene = new THREE.Scene()
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
-scene.add(directionalLight)
-directionalLight.position.set(1, 0.25, 0)
+// const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
+// scene.add(directionalLight)
+// directionalLight.position.set(1, 0.25, 0)
 
 gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
+
+const spotLight = new THREE.SpotLight(0x78ff00, 0.7, 15, Math.PI * 0.1, 0.5, 1)
+spotLight.position.set(0, 2, 3)
+spotLight.target.position.x = - 0.75
+scene.add(spotLight.target)
+scene.add(spotLight)
 
 // const pointLight = new THREE.PointLight(0xffffff, 0.5)
 // pointLight.position.x = 2
