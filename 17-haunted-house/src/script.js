@@ -179,6 +179,21 @@ const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 }
 
 /**
+ * Ghosts
+ */
+{
+    const ghost1 = new THREE.PointLight('#ff00ff', 2, 3)
+    scene.add(ghost1)
+
+    const ghost2 = new THREE.PointLight('#00ffff', 2, 3)
+    scene.add(ghost2)
+
+    const ghost3 = new THREE.PointLight('#ffff00', 2, 3)
+    scene.add(ghost3)
+}
+
+
+/**
  * Fog
  */
 const fog = new THREE.Fog('#262837', 1, 15)
@@ -245,9 +260,11 @@ controls.enableDamping = true
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
+renderer.shadowMap.enabled = true
 renderer.setClearColor('#262837')
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
 
 /**
  * Animate
