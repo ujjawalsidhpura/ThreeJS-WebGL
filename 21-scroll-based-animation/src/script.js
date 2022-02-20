@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import * as dat from 'lil-gui'
+import gsap from 'gsap'
 
 const parameters = {
     materialColor: '#ffeded'
@@ -123,6 +124,16 @@ window.addEventListener('scroll', () => {
 
     if (newSection != currentSection) {
         currentSection = newSection
+
+        gsap.to(
+            sectionMeshes[currentSection].rotation,
+            {
+                duration: 1.5,
+                ease: 'power2.inOut',
+                x: '+=6',
+                y: '+=3'
+            }
+        )
     }
 })
 
