@@ -15,22 +15,23 @@ const gui = new dat.GUI()
 /**
  * Models
  */
-const dracoLoader = new DRACOLoader()
-dracoLoader.setDecoderPath('/static/draco/')
+// const dracoLoader = new DRACOLoader()
+// dracoLoader.setDecoderPath('/static/draco/')
 
 const gltfLoader = new GLTFLoader()
-gltfLoader.setDRACOLoader(dracoLoader)
-
-gltfLoader.load(
-    '/models/Duck/glTF-Draco/Duck.gltf'
-)
+// gltfLoader.setDRACOLoader(dracoLoader)
 
 // gltfLoader.load(
-//     '/models/Duck/glTF/Duck.gltf',
-//     (gltf) => {
-//         scene.add(gltf.scene.children[0])
-//     }
+//     '/models/Duck/glTF-Draco/Duck.gltf'
 // )
+
+gltfLoader.load(
+    '/models/Fox/glTF/Fox.gltf',
+    (gltf) => {
+        gltf.scene.scale.set(0.025, 0.025, 0.025)
+        scene.add(gltf.scene)
+    }
+)
 // gltfLoader.load(
 //     '/models/FlightHelmet/glTF/FlightHelmet.gltf',
 //     (gltf) => {
