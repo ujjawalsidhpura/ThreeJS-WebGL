@@ -27,12 +27,12 @@ const gltfLoader = new GLTFLoader()
  */
 const cubeTextureLoader = new THREE.CubeTextureLoader()
 const environmentMap = cubeTextureLoader.load([
-    '/textures/environmentMaps/3/px.jpg',
-    '/textures/environmentMaps/3/nx.jpg',
-    '/textures/environmentMaps/3/py.jpg',
-    '/textures/environmentMaps/3/ny.jpg',
-    '/textures/environmentMaps/3/pz.jpg',
-    '/textures/environmentMaps/3/nz.jpg'
+    '/textures/environmentMaps/0/px.jpg',
+    '/textures/environmentMaps/0/nx.jpg',
+    '/textures/environmentMaps/0/py.jpg',
+    '/textures/environmentMaps/0/ny.jpg',
+    '/textures/environmentMaps/0/pz.jpg',
+    '/textures/environmentMaps/0/nz.jpg'
 ])
 
 environmentMap.encoding = THREE.sRGBEncoding
@@ -67,6 +67,8 @@ const updateAllMaterials = () => {
             child.material.envMap = environmentMap
             child.material.envMapIntensity = 2.5
             child.material.envMapIntensity = debugObject.envMapIntensity
+            child.castShadow = true
+            child.receiveShadow = true
         }
     })
 }
@@ -96,6 +98,8 @@ window.addEventListener('resize', () => {
 // Light 
 const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
 directionalLight.position.set(0.25, 3, - 2.25)
+directionalLight.castShadow = true
+directionalLight.shadow.camera.far = 15
 scene.add(directionalLight)
 
 gui.add(directionalLight, 'intensity').min(0).max(10).step(0.001).name('lightIntensity')
@@ -108,6 +112,9 @@ gui.add(directionalLight.position, 'z').min(- 5).max(5).step(0.001).name('lightZ
  * Camera
  */
 // Base camera
+// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+// scene.add(directionalLightCameraHelper)
+
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.set(4, 1, - 4)
 scene.add(camera)
@@ -127,6 +134,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.physicallyCorrectLights = true
 renderer.outputEncoding = THREE.sRGBEncoding
 renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 gui.add(renderer, 'toneMapping', {
     No: THREE.NoToneMapping,
