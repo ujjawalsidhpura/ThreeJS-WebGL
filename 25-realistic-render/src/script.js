@@ -22,25 +22,27 @@ const scene = new THREE.Scene()
  */
 const gltfLoader = new GLTFLoader()
 
-
-
 /**
  * Environment map
  */
 const cubeTextureLoader = new THREE.CubeTextureLoader()
 const environmentMap = cubeTextureLoader.load([
-    '/textures/environmentMaps/1/px.jpg',
-    '/textures/environmentMaps/1/nx.jpg',
-    '/textures/environmentMaps/1/py.jpg',
-    '/textures/environmentMaps/1/ny.jpg',
-    '/textures/environmentMaps/1/pz.jpg',
-    '/textures/environmentMaps/1/nz.jpg'
+    '/textures/environmentMaps/3/px.jpg',
+    '/textures/environmentMaps/3/nx.jpg',
+    '/textures/environmentMaps/3/py.jpg',
+    '/textures/environmentMaps/3/ny.jpg',
+    '/textures/environmentMaps/3/pz.jpg',
+    '/textures/environmentMaps/3/nz.jpg'
 ])
-scene.background = environmentMap
+
+environmentMap.encoding = THREE.sRGBEncoding
+
 debugObject.envMapIntensity = 1
 gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001)
 
+scene.background = environmentMap
 scene.environment = environmentMap
+
 /**
  * Models
  */
@@ -101,6 +103,7 @@ gui.add(directionalLight.position, 'x').min(- 5).max(5).step(0.001).name('lightX
 gui.add(directionalLight.position, 'y').min(- 5).max(5).step(0.001).name('lightY')
 gui.add(directionalLight.position, 'z').min(- 5).max(5).step(0.001).name('lightZ')
 
+
 /**
  * Camera
  */
@@ -122,6 +125,16 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.physicallyCorrectLights = true
+renderer.outputEncoding = THREE.sRGBEncoding
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+
+gui.add(renderer, 'toneMapping', {
+    No: THREE.NoToneMapping,
+    Linear: THREE.LinearToneMapping,
+    Reinhard: THREE.ReinhardToneMapping,
+    Cineon: THREE.CineonToneMapping,
+    ACESFilmic: THREE.ACESFilmicToneMapping
+})
 
 /**
  * Animate
