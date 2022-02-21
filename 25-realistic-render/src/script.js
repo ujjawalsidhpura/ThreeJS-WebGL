@@ -21,6 +21,22 @@ const scene = new THREE.Scene()
  */
 const gltfLoader = new GLTFLoader()
 
+
+
+/**
+ * Environment map
+ */
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+const environmentMap = cubeTextureLoader.load([
+    '/textures/environmentMaps/1/px.jpg',
+    '/textures/environmentMaps/1/nx.jpg',
+    '/textures/environmentMaps/1/py.jpg',
+    '/textures/environmentMaps/1/ny.jpg',
+    '/textures/environmentMaps/1/pz.jpg',
+    '/textures/environmentMaps/1/nz.jpg'
+])
+scene.background = environmentMap
+
 /**
  * Models
  */
