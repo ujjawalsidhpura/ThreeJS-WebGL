@@ -9,6 +9,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
  */
 // Debug
 const gui = new dat.GUI()
+const debugObject = {}
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -36,7 +37,10 @@ const environmentMap = cubeTextureLoader.load([
     '/textures/environmentMaps/1/nz.jpg'
 ])
 scene.background = environmentMap
+debugObject.envMapIntensity = 1
+gui.add(debugObject, 'envMapIntensity').min(0).max(10).step(0.001)
 
+scene.environment = environmentMap
 /**
  * Models
  */
@@ -47,10 +51,23 @@ gltfLoader.load(
         gltf.scene.position.set(0, - 4, 0)
         gltf.scene.rotation.y = Math.PI * 0.5
         scene.add(gltf.scene)
-
+        updateAllMaterials()
         gui.add(gltf.scene.rotation, 'y').min(- Math.PI).max(Math.PI).step(0.001).name('rotation')
     }
 )
+
+/**
+ * Update all materials
+ */
+const updateAllMaterials = () => {
+    scene.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
+            child.material.envMap = environmentMap
+            child.material.envMapIntensity = 2.5
+            child.material.envMapIntensity = debugObject.envMapIntensity
+        }
+    })
+}
 
 /**
  * Sizes
