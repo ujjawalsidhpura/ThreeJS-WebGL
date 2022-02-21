@@ -1,16 +1,8 @@
-# Three.js Journey
+### Interactive Realistic Model made using Three.JS
 
-## Setup
-Download [Node.js](https://nodejs.org/en/download/).
-Run this followed commands:
+Click on this link to experience for yourself.
+<br/>
 
-``` bash
-# Install dependencies (only the first time)
-npm install
+https://realistic-3d-render-t4hs3qkm7-ujjawalsidhpura.vercel.app/
 
-# Run the local server at localhost:8080
-npm run dev
 
-# Build for production in the dist/ directory
-npm run build
-```
