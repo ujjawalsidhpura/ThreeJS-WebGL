@@ -8,25 +8,53 @@ import CANNON from 'cannon'
 /**
  * Physics
  */
+// Materials
+// const concreteMaterial = new CANNON.Material('concrete')
+// const plasticMaterial = new CANNON.Material('plastic')
+
+// Contact
+// const concretePlasticContactMaterial = new CANNON.ContactMaterial(
+//     concreteMaterial,
+//     plasticMaterial,
+//     {
+//         friction: 0.1,
+//         restitution: 0.7
+//     }
+// )
+// world.addContactMaterial(concretePlasticContactMaterial)
+
+const defaultMaterial = new CANNON.Material('default')
+const defaultContactMaterial = new CANNON.ContactMaterial(
+    defaultMaterial,
+    defaultMaterial,
+    {
+        friction: 0.1,
+        restitution: 0.7
+    }
+)
+world.addContactMaterial(defaultContactMaterial)
 
 const world = new CANNON.World()
 world.gravity.set(0, - 9.82, 0)
+world.defaultContactMaterial = defaultContactMaterial
 
 const sphereShape = new CANNON.Sphere(0.5)
 const sphereBody = new CANNON.Body({
     mass: 1,
     position: new CANNON.Vec3(0, 3, 0),
-    shape: sphereShape
+    shape: sphereShape,
+    material: defaultMaterial
 })
+sphereBody.applyLocalForce(new CANNON.Vec3(150, 0, 0), new CANNON.Vec3(0, 0, 0))
 
 const floorShape = new CANNON.Plane()
 const floorBody = new CANNON.Body()
 floorBody.mass = 0
+floorBody.material = defaultMaterial
 floorBody.addShape(floorShape)
-
+floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(- 1, 0, 0), Math.PI * 0.5)
 world.addBody(sphereBody)
 world.addBody(floorBody)
-
 
 /**
  * Debug
@@ -41,6 +69,7 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+
 
 /**
  * Textures
@@ -58,7 +87,7 @@ const environmentMapTexture = cubeTextureLoader.load([
 ])
 
 /**
- * Test sphere
+ *  sphere
  */
 const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 32, 32),
@@ -153,7 +182,14 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+/**
+ * Sounds
+ */
+const hitSound = new Audio('/sounds/hit.mp3')
 
+const playHitSound = () => {
+    hitSound.play()
+}
 /**
  * Animate
  */
@@ -165,18 +201,17 @@ const tick = () => {
     const deltaTime = elapsedTime - oldElapsedTime
     oldElapsedTime = elapsedTime
 
-    // Update physics
-    world.step(1 / 60, deltaTime, 3)
-
     // Update controls
     controls.update()
+
+    // Update physics
+    world.step(1 / 60, deltaTime, 3)
 
     // Render
     renderer.render(scene, camera)
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
-
 
 }
 
