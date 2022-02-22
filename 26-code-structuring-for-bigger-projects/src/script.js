@@ -3,6 +3,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import Experience from './Experience/Experience.js'
+
+const experience = new Experience(document.querySelector('canvas.webgl'))
 
 /**
  * Loaders
@@ -18,6 +21,7 @@ const cubeTextureLoader = new THREE.CubeTextureLoader()
 const gui = new dat.GUI()
 const debugObject = {}
 
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -27,12 +31,9 @@ const scene = new THREE.Scene()
 /**
  * Update all materials
  */
-const updateAllMaterials = () =>
-{
-    scene.traverse((child) =>
-    {
-        if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
-        {
+const updateAllMaterials = () => {
+    scene.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
             // child.material.envMap = environmentMap
             child.material.envMapIntensity = debugObject.envMapIntensity
             child.material.needsUpdate = true
@@ -69,8 +70,7 @@ let foxMixer = null
 
 gltfLoader.load(
     '/models/Fox/glTF/Fox.gltf',
-    (gltf) =>
-    {
+    (gltf) => {
         // Model
         gltf.scene.scale.set(0.02, 0.02, 0.02)
         scene.add(gltf.scene)
@@ -132,8 +132,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -182,8 +181,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock()
 let previousTime = 0
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
@@ -192,8 +190,7 @@ const tick = () =>
     controls.update()
 
     // Fox animation
-    if(foxMixer)
-    {
+    if (foxMixer) {
         foxMixer.update(deltaTime)
     }
 
