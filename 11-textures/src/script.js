@@ -21,7 +21,7 @@ const scene = new THREE.Scene()
 // image.src = '/textures/door/color.jpg'
 
 const loadingManager = new THREE.LoadingManager()
-const textureLoader = new THREE.TextureLoader()
+const textureLoader = new THREE.TextureLoader(loadingManager)
 
 // const colorTexture = textureLoader.load('/textures/door/color.jpg')
 const colorTexture = textureLoader.load('/textures/minecraft.png')
