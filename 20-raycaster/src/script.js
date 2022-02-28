@@ -149,3 +149,31 @@ const tick = () => {
 }
 
 tick()
+
+//     < svg width = "9" height = "10" viewBox = "0 0 9 10" fill = "none" xmlns = "http://www.w3.org/2000/svg" >
+//         <circle cx="4.57842" cy="5.06373" r="3.09707" transform="rotate(-180 4.57842 5.06373)" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+// </svg >
+// /* Ellipse 223 */
+
+// position: absolute;
+// width: 6.19px;
+// height: 6.19px;
+// left: 1090.68px;
+// top: 109.16px;
+
+// border: 2px solid #000000;
+// // transform: rotate(-180deg);
+// <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+// <g opacity="0.5">
+// <rect x="1.25" y="1.25" width="39.5" height="39.5" rx="3.75" stroke="black" stroke-width="2.5"/>
+// <line x1="6.83389" y1="11.819" x2="9.25827" y2="11.819" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <path d="M16.8948 11.7129L35.6984 11.7129" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <circle cx="12.9474" cy="11.2637" r="3.09707" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <path d="M6.94023 31.6832L16.342 31.6832" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <line x1="23.4257" y1="31.7893" x2="35.8049" y2="31.7893" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <circle cx="19.758" cy="31.9312" r="3.09707" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <line x1="35.8047" y1="20.9576" x2="32.643" y2="20.9576" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <line x1="26.5126" y1="20.9576" x2="6.83316" y2="20.9576" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// <circle cx="29.5784" cy="21.0637" r="3.09707" transform="rotate(-180 29.5784 21.0637)" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+// </g>
+// </svg>
